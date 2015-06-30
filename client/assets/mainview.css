@@ -1,0 +1,27 @@
+/* CSS declarations go here */
+
+div .LeftContent {
+  height: 100vh;
+  padding-left: 20%;
+  padding-right: 20%;
+  padding-top: 40%;
+  padding-bottom: 20%;
+}
+
+div .RightContent {
+  height: 100vh;
+}
+
+div .ActivityBar {
+}
+
+div .ActivityBarFill {
+}
+
+div .StatsContent {
+  height: 50vh;
+}
+
+div .SettingsContent {
+  height: 50vh;
+}
