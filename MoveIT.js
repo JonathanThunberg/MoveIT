@@ -1,9 +1,7 @@
 if (Meteor.isClient) {
-  var TenMinutes = new Mongo.Collection('tenMinutes');
+  var TenMinutes = new Mongo.Collection();
   TenMinutes.insert({ id:1, text: "Hello World" });
   console.log(TenMinutes);
-
-
 
   // counter starts at 0
   Session.setDefault('counter', 0);
@@ -25,8 +23,9 @@ if (Meteor.isClient) {
     },
     'click #db': function () {
       // increment the counter when button is clicked
-      var text = TenMinutes.findOne({id: 1}).fetch();
+      var text = TenMinutes.findOne();
       console.log(text);
+      console.log(JSON.stringify(text));
     }
 
   });
