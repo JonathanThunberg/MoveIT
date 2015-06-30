@@ -4,7 +4,7 @@
     var currentActivityLevel = 23;
     var totalSteps = 50;
     var stepsSinceLevelUpdate = 1;
-    var levelPerStepsThreshold = 3;
+    var levelPerStepsThreshold = 1;
     var timeInterval = 3000;
 
     timeInterval = Meteor.setInterval(

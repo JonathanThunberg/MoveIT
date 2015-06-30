@@ -1,7 +1,9 @@
 if (Meteor.isClient) {
 
-  var TenMinutes = new Mongo.Collection('tenMinutes');
-  TenMinutes.insert({ id:1, text: "Hello" });
+  var tenMinutes = new Mongo.Collection('tenMinutes', {connection: null});
+  var tenMinutesObserver = new PersistentMinimongo(tenMinutes);
+
+  tenMinutes.insert({ id:1, text: "Hello" });
   var walkingService = new walkService();
 
   // counter starts at 0
@@ -25,10 +27,10 @@ if (Meteor.isClient) {
     },
     'click #db': function () {
       // increment the level when button is clicked
-      var text = TenMinutes.find();
+      var text = tenMinutes.findOne({id: 30});
+      tenMinutes.insert({id: walkingService.getCurrent(), text: "3"});
       console.log(text);
       console.log(JSON.stringify(text));
-      walkingService.takeStep();
     }
 
   });
@@ -37,7 +39,6 @@ if (Meteor.isClient) {
 if (Meteor.isServer) {
   Meteor.startup(function () {
     // code to run on server at startup
-    var TenMinutes = new Mongo.Collection('tenMinutes');
 
   });
 }
