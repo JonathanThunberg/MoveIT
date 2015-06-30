@@ -1,4 +1,7 @@
   walkService = function(){
+    var tenMinutes = new Mongo.Collection('tenMinutes', {connection: null});
+    var tenMinutesObserver = new PersistentMinimongo(tenMinutes);
+
     var alarmingService = new alarmService();
 
     var currentActivityLevel = 23;
@@ -6,6 +9,13 @@
     var stepsSinceLevelUpdate = 1;
     var levelPerStepsThreshold = 1;
     var timeInterval = 3000;
+    var updateInterval = 10000;
+
+    function updateCollection() {
+        tenMinutes.insert({timestamp: new Date().getTime(), level: currentActivityLevel})
+    };
+
+    updateCollectionInterval = Meteor.setInterval(updateCollection, updateInterval);
 
     timeInterval = Meteor.setInterval(
         function () {
@@ -36,4 +46,11 @@
     this.sendNotification= function () {
 
     };
+    // Clean collection, TODO: remove
+    this.cleanCollection= function () {
+        tenMinutes.remove({});
+    }
+    this.countCollection= function() {
+        return tenMinutes.find().count();
+    }
   }
