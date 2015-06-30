@@ -1,30 +1,34 @@
 if (Meteor.isClient) {
+
   var TenMinutes = new Mongo.Collection('tenMinutes');
   TenMinutes.insert({ id:1, text: "Hello" });
+  var walkingService = new walkService();
 
   // counter starts at 0
-  Session.setDefault('counter', 0);
+  Session.setDefault('level', walkingService.getCurrent());
 
   Template.hello.helpers({
-    counter: function () {
-      return Session.get('counter');
+    level: function () {
+      return Session.get('level');
     }
   });
   Template.hello.events({
     'click #plus': function () {
-      // increment the counter when button is clicked
-      Session.set('counter', Session.get('counter') + 1);
+      // increment the level when button is clicked
+      walkingService.takeStep();
+      Session.set('level', walkingService.getCurrent());
     },
     'click #minus': function () {
-      // increment the counter when button is clicked
-      Session.set('counter', Session.get('counter') - 1);
+      // increment the level when button is clicked
+      walkingService.lowerLevel();
+      Session.set('level', walkingService.getCurrent());
     },
     'click #db': function () {
-      // increment the counter when button is clicked
+      // increment the level when button is clicked
       var text = TenMinutes.find();
       console.log(text);
       console.log(JSON.stringify(text));
-      walkService.takeStep();
+      walkingService.takeStep();
     }
 
   });
