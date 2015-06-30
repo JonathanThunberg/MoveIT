@@ -1,20 +1,6 @@
 var walkingService = new walkService();
 
-document.addEventListener("deviceready", onDeviceReady, false);
-function onDeviceReady() {
-    console.log("onDeviceReady");
-    console.log(JSON.stringify(navigator.accelerometer));
-    var watchID = navigator.accelerometer.watchAcceleration(
-      function(acceleration){
-        console.log('Acceleration X: ' + acceleration.x +" : " +
-           'Acceleration Y: ' + acceleration.y + " : " +
-           'Acceleration Z: ' + acceleration.z + " : " +
-           'Timestamp: '      + acceleration.timestamp );
-      },
-      function(){
 
-      },{ frequency: 3000 });
-}
 // counter starts at 0
 Session.setDefault('level', walkingService.getCurrent());
 

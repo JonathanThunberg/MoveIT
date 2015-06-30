@@ -10,6 +10,7 @@
     var levelPerStepsThreshold = 1;
     var timeInterval = 3000;
     var updateInterval = 10000;
+    var accUpdateFreq = 3000;
 
     function updateCollection() {
         tenMinutes.insert({timestamp: new Date().getTime(), level: currentActivityLevel})
@@ -27,6 +28,17 @@
             Session.set('level', currentActivityLevel);
         }, timeInterval);
 
+    function AccSuccess(acceleration) {
+
+    };
+    function AccError() {
+    };
+
+    var AccOptions = { frequency: accUpdateFreq };  // Update every 3 seconds
+    document.addEventListener("deviceready", onDeviceReady, false);
+    function onDeviceReady() {
+        var watchID = navigator.accelerometer.watchAcceleration(AccSuccess, AccError, AccOptions);
+    }
 
     // return current activity level
     this.getCurrent= function () {
