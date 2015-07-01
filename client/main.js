@@ -1,5 +1,5 @@
 var walkingService = new walkService();
-
+var soundingService = new soundService();
 
 // counter starts at 0
 Session.setDefault('level', walkingService.getCurrent());
@@ -24,6 +24,9 @@ Template.hello.events({
   },
   'click #cleanCollection': function () {
     walkingService.cleanCollection();
+  },
+  'click #sound': function () {
+    soundingService.playSound();
   }
 
 });

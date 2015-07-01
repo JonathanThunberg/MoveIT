@@ -2,14 +2,13 @@ soundService = function() {
   var media;
   document.addEventListener("deviceready", onDeviceReady, false);
   function onDeviceReady() {
-    media = new Media('www/application/sounds/test.wav', mediaSuccess, [mediaError], [mediaStatus]);
+    var uri=cordova.file.applicationDirectory.replace('file://', '') + 'www/application/sounds/tmp.wav';
+    media = new Media(uri);
   };
-  function mediaSuccess(){
 
-  };
-  var test = playSound('/sounds/test.wav');
   this.playSound = function() {
     media.play();
+    console.log("playing media");
   }
 
 }
