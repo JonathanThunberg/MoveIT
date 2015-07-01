@@ -5,7 +5,7 @@
   height: 100vh;
 }
 
-div .LeftContent {
+.LeftContent {
   @extend .ContentBackground;
   padding-left: 20%;
   padding-right: 20%;
@@ -13,22 +13,22 @@ div .LeftContent {
   padding-bottom: 20%;
 }
 
-div .RightContent {
+.RightContent {
   @extend .ContentBackground;
 }
 
-div .ActivityBar {
+.ActivityBar {
   background-color: $primary-color-dark;
 }
 
-div .ActivityBarFill {
+.ActivityBarFill {
   background-color: $primary-color;
 }
 
-div .StatsContent {
-  height: 50vh;
+.StatsContent {
+  height: 60vh;
 }
 
-div .SettingsContent {
-  height: 50vh;
+.SettingsContent {
+  height: 40vh;
 }

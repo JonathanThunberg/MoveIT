@@ -18,7 +18,9 @@
         {{> stats}}
         </div>
         <div class="SettingsContent">
-          Settings
+          {{#each alarmSettings}}
+              {{> alarmSettingRow}}
+          {{/each}}
         </div>
       </div>
     </div>
@@ -32,3 +34,16 @@
 <template name="stats">
   <p>You've walked {{counter}} steps.</p>
 </template>
+
+<template name="alarmSettingBtn">
+    <div class="btn-floating btn-large {{state}}">
+        <i class="material-icons">{{icon}}</i>
+    </div>
+</template>
+
+<template name="alarmSettingRow">
+  <div class="row right-align" style="padding-right: 10%; margin-bottom: 5px;">
+    {{type}}
+    {{> alarmSettingBtn}}
+  </div>
+</Template>
