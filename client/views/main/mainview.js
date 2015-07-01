@@ -1,20 +1,11 @@
 
 
-function barHeight() {
-  return Math.ceil($('.LeftContent').height() * Session.get('counter') / 100);
-}
-
-function updateActivity() {
-  var height = barHeight();
-  $('.ActivityBar').animate({
-    height: ($('.LeftContent').height() - height)+"px"
-  }, 100);
-  $('.ActivityBarFill').animate({
-    height: height + "px"
-  }, 100);
-}
-
 if (Meteor.isClient) {
+  // Set up on-load function:
+  Router.onAfterAction(function () {
+    
+  }, {only: ['main']});
+
   // counter starts at 0
   Session.setDefault('counter', 0);
 
@@ -33,9 +24,17 @@ if (Meteor.isClient) {
     'click': function () {
       // increment the counter when button is clicked
       Session.set('counter', Session.get('counter') + 1);
-      updateActivity();
     }
   });
+
+  //---------------------------
+  // Activity Bar
+  //---------------------------
+  Template.activityBar.helpers({
+    fillHeight: function () {
+      return 100 - Session.get('counter');
+    }
+  })
 
   //---------------------------
   // Quick settings buttons
