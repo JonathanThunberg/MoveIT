@@ -30,8 +30,13 @@
 
 .StatsContent {
   height: 60vh;
+  padding-right: 10%;
 }
 
 .SettingsContent {
   height: 40vh;
+}
+
+.ReturnTopBar {
+  background-color: $secondary-color;
 }
