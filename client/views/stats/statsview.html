@@ -1,6 +1,16 @@
 
 <template name="statsView">
   <div class="row">
-    <canvas id="ActivityChart"></canvas>
+    <ul class="tabs">
+      {{#each activityChartTabs}}
+        {{> activityChartTab}}
+      {{/each}}
+    </ul>
+
+    <canvas id="activityChart"></canvas>
   </div>
+</template>
+
+<template name="activityChartTab">
+  <li class="tab col s4"><a class="active" href="#activityChart">{{type}}</a></li>
 </template>
