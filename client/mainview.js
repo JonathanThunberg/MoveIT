@@ -1,3 +1,5 @@
+
+
 function barHeight() {
   return Math.ceil($('.LeftContent').height() * Session.get('counter') / 100);
 }
@@ -20,10 +22,43 @@ if (Meteor.isClient) {
   Session.setDefault('alarmUseSound', true);
   Session.setDefault('alarmUseVibration', true);
   Session.setDefault('alarmUseLight', true);
+  Session.setDefault('main_is_hidden', false);
+  Session.setDefault('stat_is_hidden', true);
+  Session.setDefault('sett_is_hidden', true);
 
   Meteor.startup(function () {
     updateActivity();
   });
+
+  // navigation
+  Template.navigationbar.onRendered(function(){
+    $(".button-collapse").sideNav();
+  });
+
+  Template.navmoveitem.events({
+    'click' : function() {
+      Session.set('main_is_hidden', false);
+      Session.set('stat_is_hidden', true);
+      Session.set('sett_is_hidden', true);
+      updateActivity();
+    }
+  })
+  Template.navstatitem.events({
+    'click' : function() {
+      Session.set('main_is_hidden', true);
+      Session.set('stat_is_hidden', false);
+      Session.set('sett_is_hidden', true);
+      updateActivity();
+    }
+  })
+  Template.navsettitem.events({
+    'click' : function() {
+      Session.set('main_is_hidden', true);
+      Session.set('stat_is_hidden', true);
+      Session.set('sett_is_hidden', false);
+      updateActivity();
+    }
+  })
 
   Template.stats.helpers({
     counter: function () {
@@ -53,7 +88,18 @@ if (Meteor.isClient) {
       { type: 'Light',
         icon_enabled: 'phonelink_ring',
         icon_disabled: 'phonelink_erase' }
-    ]
+    ],
+
+    hidemain : function() {
+      return Session.get("main_is_hidden");
+    },
+    hidestat : function() {
+      return Session.get("stat_is_hidden");
+    },
+    hidesett : function() {
+      return Session.get("sett_is_hidden");
+    }
+
   });
 
   //---------------------------
