@@ -7,4 +7,5 @@
 meteor-platform
 autopublish
 insecure
-materialize:materialize
+fourseven:scss
+yang2007chun:materialize-scss
