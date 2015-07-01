@@ -1,13 +1,13 @@
 var activityChart;
 var activityBaseData = {
-    labels: [],
-    datasets: [
-        {
-            fillColor: "#B3E5FC",
-            strokeColor: "#0288D1",
-            data: []
-        }
-    ]
+  labels: [],
+  datasets: [
+    {
+      fillColor: "#B3E5FC",
+      strokeColor: "#0288D1",
+      data: []
+    }
+  ]
 };
 var activityOptions = {
   responsive: true,
@@ -26,14 +26,18 @@ updateChart = function(chart, pointsName, numPoints) {
   for(var n = 0; n < numPoints; n++) {
     chart.addData([points[n]], '');
   }
+  chart.resize();
   chart.update();
 };
 
 createChart = function(id) {
   var context = document.getElementById(id).getContext('2d');
   context.canvas.width = $(window).width();
+  console.log(context.canvas.width);
   context.canvas.height = $(window).height() / 3;
-  activityChart = new Chart(context).Line(activityBaseData, activityOptions);
+  //if (!activityChart) {
+    activityChart = new Chart(context).Line(activityBaseData, activityOptions);
+  //}
 }
 
 
@@ -46,12 +50,15 @@ emulateData = function() {
 }
 
 if (Meteor.isClient) {
-  Meteor.startup(function () {
+  // Create temp data
+  Router.onAfterAction(function () {
     emulateData();
+  }, {only: ['statsView']});
+
+  Template.statsView.rendered = function() {
     createChart('activityChart');
     updateChart(activityChart, 'activityPoints', 8);
-    console.log("init");
-  });
+  }
 
   Template.statsView.helpers({
     // Data context for activity chart:
@@ -61,9 +68,9 @@ if (Meteor.isClient) {
       { type: 'Month', points: 30, active: '' }
     ]});
 
-  Template.activityChartTab.events({
-    'click': function () {
-      updateChart(activityChart, 'activityPoints', this.points);
-    }
-  });
-}
+    Template.activityChartTab.events({
+      'click': function () {
+        updateChart(activityChart, 'activityPoints', this.points);
+      }
+    });
+  }

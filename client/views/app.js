@@ -7,5 +7,6 @@ if (Meteor.isClient) {
       name: 'main'
     }
   );
+  Router.route('/statsView')
   Router.route('/settingsView');
 }
