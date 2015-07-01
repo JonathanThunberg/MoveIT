@@ -12,6 +12,7 @@
     var timeInterval = 5000;
     var updateInterval = 10000;
     var accUpdateFreq = 2000;
+    // Set this to mobile specific
     var barkMobStilla = 9.75;
     var diffForMovement = 0.5;
 

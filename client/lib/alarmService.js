@@ -32,15 +32,15 @@ alarmService = function() {
           herpa.vibration++;
         }
         if(herpa.sound > alarms.sound.length && level < alarms.sound[herpa.sound]) {
-          navigator.vibrate(1000);
-          // vibrationAlarm triggered, check for next
-          console.log('vibrate alarm nr; ' + herpa.sound);
+
+          // soundAlarm triggered, check for next
+          console.log('sound alarm nr; ' + herpa.sound);
           herpa.sound++;
         }
         if(herpa.light > alarms.light.length && level < alarms.light[herpa.light]) {
-          navigator.vibrate(1000);
-          // vibrationAlarm triggered, check for next
-          console.log('vibrate alarm nr; ' + herpa.light);
+
+          // soundAlarm triggered, check for next
+          console.log('light alarm nr; ' + herpa.light);
           herpa.light++;
         }
     };
