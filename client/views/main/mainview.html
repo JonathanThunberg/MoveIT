@@ -3,8 +3,7 @@
   <div class="row">
     <div class="col s5 m2 l1" style="padding-left:0px; padding-right:0px;">
       <div class="LeftContent">
-          <div class="ActivityBar"></div>
-          <div class="ActivityBarFill"></div>
+        {{> activityBar}}
       </div>
     </div>
 
@@ -28,6 +27,12 @@
 
 <template name="stats">
   <p>You've walked {{counter}} steps.</p>
+</template>
+
+<template name="activityBar">
+  <div class="BarContainer">
+    <div class="BarBackground" style="height: {{fillHeight}}%"></div>
+  </div>
 </template>
 
 <template name="alarmSettingBtn">
