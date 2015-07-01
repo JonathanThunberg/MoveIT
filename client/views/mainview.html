@@ -3,7 +3,8 @@
 </head>
 
 <body>
-  <div class="row">
+  {{> navigationbar}}
+  <div hidden="{{hidemain}}" class="row">
     <div class="col s5 m2 l1" style="padding-left:0px; padding-right:0px;">
       <div class="LeftContent">
           <div class="ActivityBar"></div>
@@ -24,6 +25,12 @@
         </div>
       </div>
     </div>
+  </div>
+  <div hidden="{{hidesett}}" class="row">
+    Hello. man.. This is settings.
+  </div>
+  <div hidden="{{hidestat}}" class="row">
+    Hello. man.. This is statistics.
   </div>
 </body>
 
@@ -46,4 +53,4 @@
     {{type}}
     {{> alarmSettingBtn}}
   </div>
-</Template>
+</template>
