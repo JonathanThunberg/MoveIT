@@ -3,7 +3,11 @@
 // Existing content in the file will not be touched
 // When deleting a .scss or .sass file you must manually delete it from here
 
-@import "client/assets/styles/mainview.scss";
+// Global Materialize overrides:
+@import "client/assets/styles/colors.scss";
 
 // Materialize imports:
 @import ".meteor/local/build/programs/server/assets/packages/yang2007chun_materialize-scss/bower_components/materialize/sass/materialize.scss";
+
+// Normal imports:
+@import "client/assets/styles/mainview.scss";

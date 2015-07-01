@@ -1,7 +1,12 @@
 /* CSS declarations go here */
 
-div .LeftContent {
+.ContentBackground {
+  background-color: $global-background-color;
   height: 100vh;
+}
+
+div .LeftContent {
+  @extend .ContentBackground;
   padding-left: 20%;
   padding-right: 20%;
   padding-top: 40%;
@@ -9,13 +14,15 @@ div .LeftContent {
 }
 
 div .RightContent {
-  height: 100vh;
+  @extend .ContentBackground;
 }
 
 div .ActivityBar {
+  background-color: $primary-color-dark;
 }
 
 div .ActivityBarFill {
+  background-color: $primary-color;
 }
 
 div .StatsContent {
