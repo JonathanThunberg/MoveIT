@@ -4,6 +4,7 @@
     var tenMinutesObserver = new PersistentMinimongo(tenMinutes);
 
     var alarmingService = new alarmService();
+    var soundingService = new soundService();
 
     var currentActivityLevel = 23;
     var totalSteps = 0;
@@ -35,6 +36,9 @@
     // Update level only if enough steps have been taken
     this.senseMovement= function () {
         totalSteps++;
+        if(totalSteps > 20){
+          soundingService.playSound();
+        }
         stepsSinceLevelUpdate++;
         if(stepsSinceLevelUpdate >
                     levelPerStepsThreshold){
