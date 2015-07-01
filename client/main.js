@@ -12,12 +12,11 @@ Template.hello.helpers({
 Template.hello.events({
   'click #plus': function () {
     // increment the level when button is clicked
-    walkingService.takeStep();
+    walkingService.senseMovement();
     Session.set('level', walkingService.getCurrent());
   },
   'click #minus': function () {
     // increment the level when button is clicked
-    walkingService.lowerLevel();
     Session.set('level', walkingService.getCurrent());
   },
   'click #db': function () {
