@@ -1,20 +1,22 @@
 <template name="navigationbar">
-	<nav>
-    <div class="nav-wrapper">
-      <a href="#" id="header-text" class="brand-logo center">MoveIT</a>
-      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-      <ul class="right hide-on-med-and-down">
-      	{{> navmoveitem}}
-        {{> navstatitem}}
-        {{> navsettitem}}
-      </ul>
-      <ul class="side-nav" id="mobile-demo">
-        {{> navmoveitem}}
-        {{> navstatitem}}
-        {{> navsettitem}}
-      </ul>
-    </div>
-  </nav>
+  <div class="navbar-fixed">
+	<nav style="height:150px, font:100%">
+	  <div class="nav-wrapper" style="height:100%">
+	    <a href="#" id="header-text" class="brand-logo center">MoveIT</a>
+	    <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+	    <ul class="right hide-on-med-and-down">
+	    	{{> navmoveitem}}
+	      {{> navstatitem}}
+	      {{> navsettitem}}
+	    </ul>
+	    <ul class="side-nav" id="mobile-demo">
+	      {{> navmoveitem}}
+	      {{> navstatitem}}
+	      {{> navsettitem}}
+	    </ul>
+	  </div>
+	</nav>
+  </div>
 </template>
 
 <template name="navmoveitem">
