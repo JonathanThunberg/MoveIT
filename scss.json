@@ -1,4 +1,4 @@
 {
   "useIndex" : true,
-  "indexFilePath" : "client/assets/styles/main.scss"
+  "indexFilePath" : "client/stylesheets/main.scss"
 }
