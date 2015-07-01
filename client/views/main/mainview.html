@@ -1,10 +1,6 @@
-<head>
-  <title>MoveIT</title>
-</head>
 
-<body>
-  {{> navigationbar}}
-  <div hidden="{{hidemain}}" class="row">
+<Template name="mainView">
+  <div class="row">
     <div class="col s5 m2 l1" style="padding-left:0px; padding-right:0px;">
       <div class="LeftContent">
           <div class="ActivityBar"></div>
@@ -19,21 +15,12 @@
         {{> stats}}
         </div>
         <div class="SettingsContent">
-          {{#each alarmSettings}}
-            {{> alarmSettingRow}}
-          {{/each}}
+          {{> alarmSettings}}
         </div>
       </div>
     </div>
   </div>
-  <div hidden="{{hidesett}}" class="row">
-    {{> settingsview}}
-    Hello. man.. This is settings.
-  </div>
-  <div hidden="{{hidestat}}" class="row">
-    Hello. man.. This is statistics.
-  </div>
-</body>
+</template>
 
 <template name="step">
   <a class="btn">Test</a>
@@ -54,4 +41,10 @@
     {{type}}
     {{> alarmSettingBtn}}
   </div>
+</template>
+
+<template name="alarmSettings">
+  {{#each alarmSettingsInfo}}
+    {{> alarmSettingRow}}
+  {{/each}}
 </template>

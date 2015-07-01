@@ -1,22 +1,16 @@
-var data = {
+var activityChart;
+var activityBaseData = {
     labels: [],
     datasets: [
         {
-            label: "",
-            fillColor: "rgba(220,220,220,0.2)",
-            strokeColor: "rgba(220,220,220,1)",
-            pointColor: "rgba(220,220,220,1)",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(220,220,220,1)",
+            fillColor: "#B3E5FC",
+            strokeColor: "#0288D1",
             data: []
         }
     ]
 };
-
-var activityChart;
-
-var options = {
+var activityOptions = {
+  responsive: true,
   showScale: false,
   showTooltips: false,
   skipLabels: true,
@@ -25,13 +19,12 @@ var options = {
 }
 
 updateChart = function(chart, pointsName, numPoints) {
-  var points = Session.get(pointsName);
-  console.log(chart.datasets[0].points.length);
+  var points = Session.get(pointsName).slice();
   for(var n = chart.datasets[0].points.length; n > 0; n--) {
     chart.removeData();
   }
   for(var n = 0; n < numPoints; n++) {
-    chart.addData([n], '');
+    chart.addData([points[n]], '');
   }
   chart.update();
 };
@@ -40,20 +33,31 @@ createChart = function(id) {
   var context = document.getElementById(id).getContext('2d');
   context.canvas.width = $(window).width();
   context.canvas.height = $(window).height() / 3;
-  activityChart = new Chart(context).Line(data, options);
+  activityChart = new Chart(context).Line(activityBaseData, activityOptions);
+}
+
+
+emulateData = function() {
+  var data = [1.5];
+  for (var i = 1; i < 100; i++) {
+    data.push(data[i - 1] + Math.random() - 0.5);
+  }
+  Session.set('activityPoints', data);
 }
 
 if (Meteor.isClient) {
   Meteor.startup(function () {
+    emulateData();
     createChart('activityChart');
-    updateChart(activityChart, 'activityPoints', 24);
+    updateChart(activityChart, 'activityPoints', 8);
+    console.log("init");
   });
 
   Template.statsView.helpers({
     // Data context for activity chart:
     activityChartTabs: [
-      { type: 'Day', points: 24, active: 'active' },
-      { type: 'Week', points: 7, active: '' },
+      { type: 'Day', points: 8, active: 'active' },
+      { type: 'Week', points: 8*7, active: '' },
       { type: 'Month', points: 30, active: '' }
     ]});
 
