@@ -1,5 +1,6 @@
 var walkingService = new walkService();
 var soundingService = new soundService();
+var alarmingService = new alarmService();
 
 // counter starts at 0
 Session.setDefault('level', walkingService.getCurrent());
@@ -12,6 +13,7 @@ Template.hello.helpers({
 Template.hello.events({
   'click #plus': function () {
     // increment the level when button is clicked
+    console.log("plus button pressed");
     walkingService.senseMovement();
     Session.set('level', walkingService.getCurrent());
   },
@@ -27,6 +29,9 @@ Template.hello.events({
   },
   'click #sound': function () {
     soundingService.playSound();
+  },
+  'click #test': function () {
+    alarmingService.checkAlarmStatus("vibration");
   }
 
 });

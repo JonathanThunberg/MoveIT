@@ -45,6 +45,7 @@
             currentActivityLevel++;
             stepsSinceLevelUpdate = 1;
         }
+        console.log("senseMovement");
     };
 
     function AccSuccess(acceleration) {
@@ -57,9 +58,11 @@
     };
 
     var AccOptions = { frequency: accUpdateFreq };  // Update every 3 seconds
-    document.addEventListener("deviceready", onDeviceReady, false);
-    function onDeviceReady() {
-        var watchID = navigator.accelerometer.watchAcceleration(AccSuccess, AccError, AccOptions);
+    if(Meteor.isCordova){
+      document.addEventListener("deviceready", onDeviceReady, false);
+      function onDeviceReady() {
+          var watchID = navigator.accelerometer.watchAcceleration(AccSuccess, AccError, AccOptions);
+      };
     }
 
     // return current activity level
