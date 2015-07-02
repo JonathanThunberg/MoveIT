@@ -1,13 +1,8 @@
 alarmService = function() {
+    var that = this;
     var alarmdiff = 2;
     var alarmBools = new Mongo.Collection('alarmBools', {connection: null});
     var alarmBoolsObserver = new PersistentMinimongo(alarmBools);
-
-
-
-    var vibrationOn = true;
-    var soundOn;
-    var lightOn;
 
     var alarmTriggerLevel = {
       vibration: 0,
@@ -23,14 +18,16 @@ alarmService = function() {
       var find = alarmBools.find({alarm: option}).fetch();
       if(find.length == 0) {
         alarmBools.insert({alarm: option, on: true});
-        console.log("nothing found");
         return true;
       } else {
-        console.log("else");
-        console.log(find);
-        return true;
+        return find[0].on;
       }
-    }
+    };
+    // check if options are set in collection, otherwise set them to true
+    var vibrationOn = that.checkAlarmStatus("vibrationOn");
+    var soundOn = that.checkAlarmStatus("soundOn");
+    var lightOn = that.checkAlarmStatus("lightOn");
+
     this.buildAlarms = function(vibration, sound, light){
         alarms = {
             vibration: vibration,
@@ -38,25 +35,36 @@ alarmService = function() {
             light: light
         }
     };
-    this.toggleVibration = function (bool) {
-      if(bool !== undefined){
-        vibrationOn = bool;
+    this.toggleAlarmOption = function (option, bool) {
+      if(option !== undefined){
+        if(bool !== undefined){
+          switch(option){
+            case 'vibration':
+            vibrationOn = bool;
+            break;
+            case 'sound':
+            soundOn = bool;
+            break;
+            case 'light':
+            lightOn = bool;
+            break;
+          }
+        } else {
+          switch(option){
+            case 'vibration':
+            vibrationOn = !vibrationOn;
+            break;
+            case 'sound':
+            soundOn = !soundOn;
+            break;
+            case 'light':
+            lightOn = !lightOn;
+            break;
+          }
+        }
       } else {
-        vibrationOn = !vibrationOn;
-      }
-    };
-    this.toggleSound = function (bool) {
-      if(bool !== undefined){
-        soundOn = bool;
-      } else {
-        soundOn = !soundOn;
-      }
-    };
-    this.toggleLight = function (bool) {
-      if(bool !== undefined){
-        lightOn = bool;
-      } else {
-        lightOn = !lightOn;
+        // TODO: need to supply option
+        console.log("option needs to be defined in toggleAlarmOption");
       }
     };
     this.setAlarms = function(receivedAlarms){
@@ -104,7 +112,6 @@ alarmService = function() {
         }
       }
     }
-
     this.getAlarms = function() {
         return alarms;
     };

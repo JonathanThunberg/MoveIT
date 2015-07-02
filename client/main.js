@@ -31,7 +31,6 @@ Template.hello.events({
     soundingService.playSound();
   },
   'click #test': function () {
-    alarmingService.checkAlarmStatus("vibration");
+    console.log(alarmingService.checkAlarmStatus("vibrationOn"));
   }
-
 });
