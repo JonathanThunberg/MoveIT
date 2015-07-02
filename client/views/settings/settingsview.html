@@ -131,3 +131,23 @@
 	</div>
 </div>
 </template>
+
+
+<template name="weekdaysettingsitem">
+	<input type="checkbox" id="settings_day_{{day}}" {{selected}} />
+	<label for="settings_day_{{day}}">{{day}}</label>
+</template>
+<template name="weekdaysettingsrow">
+	<li class="collection-item">
+		{{day}}
+		{{> weekdaysettingsitem}}
+	</li>
+</template>
+<template name="weekdaysettings">
+	<ul class="collection with-header">
+	    <li class="collection-header"><h6>Weekdays</h6></li>
+		{{#each day}}
+			{{> weekdaysettingsrow}}
+		{{/each}}
+	</ul>
+</template>
