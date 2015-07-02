@@ -3,11 +3,13 @@
 if (Meteor.isClient) {
   // Set up on-load function:
   Router.onAfterAction(function () {
-    
+
   }, {only: ['main']});
 
   // counter starts at 0
   Session.setDefault('counter', 0);
+
+  Session.setDefault('sliderx', 0);
 
   // all settings enabled by default for now
   Session.setDefault('alarmUseSound', true);
@@ -27,6 +29,35 @@ if (Meteor.isClient) {
     }
   });
 
+  Template.dragelement.rendered = function(){
+    $('#slider').animate({
+      top: "+="+100+"px"
+    }, 0);
+  }
+
+  Template.dragelement.events({
+    'click': function(){
+    },
+    'touchstart': function(){
+    },
+    'touchend': function(){
+
+    },
+    'touchmove': function(e){
+      e.stopPropagation();
+      e.preventDefault();
+      var currentY = e.originalEvent.touches ? e.originalEvent.touches[0].pageY : e.pageY;
+      var act =$('.BarContainer');
+      var actpos = act.position();
+      var biggerValue = (act.height()+(actpos.top));
+      var slider = $('#slider');
+      if(currentY<(act.height()+(actpos.top)-(slider.height()/2)) && currentY>(actpos.top)-(slider.height()/2)){
+        slider.animate({
+          top: currentY+"px"
+        }, 0);
+      }
+    }
+  });
   //---------------------------
   // Activity Bar
   //---------------------------
