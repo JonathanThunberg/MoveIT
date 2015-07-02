@@ -1,5 +1,8 @@
 alarmService = function() {
     var alarmdiff = 2;
+    var vibrationOn;
+    var soundOn;
+    var lightOn;
 
     var herpa = {
       vibration: 0,
@@ -19,25 +22,33 @@ alarmService = function() {
             light: light
         }
     };
-
+    this.setVibrationOn = function (bool) {
+      vibrationOn = bool;
+    };
+    this.setSoundOn = function (bool) {
+      soundOn = bool;
+    };
+    this.setLightOn = function (bool) {
+      lightOn = bool;
+    };
     this.setAlarms = function(receivedAlarms){
         alarms = receivedAlarms;
     };
     // TODO: rewrite
     this.checkForAlarms = function(level){
-        if(herpa.vibration > alarms.vibration.length && level < alarms.vibration[herpa.vibration]) {
+        if(vibrationOn && herpa.vibration > alarms.vibration.length && level < alarms.vibration[herpa.vibration]) {
           navigator.vibrate(1000);
           // vibrationAlarm triggered, check for next
           console.log('vibrate alarm nr; ' + herpa.vibration);
           herpa.vibration++;
         }
-        if(herpa.sound > alarms.sound.length && level < alarms.sound[herpa.sound]) {
+        if(soundOn && herpa.sound > alarms.sound.length && level < alarms.sound[herpa.sound]) {
 
           // soundAlarm triggered, check for next
           console.log('sound alarm nr; ' + herpa.sound);
           herpa.sound++;
         }
-        if(herpa.light > alarms.light.length && level < alarms.light[herpa.light]) {
+        if(lightOn && herpa.light > alarms.light.length && level < alarms.light[herpa.light]) {
 
           // soundAlarm triggered, check for next
           console.log('light alarm nr; ' + herpa.light);
