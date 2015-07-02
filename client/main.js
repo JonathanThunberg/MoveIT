@@ -4,7 +4,7 @@ var alarmingService = new alarmService();
 
 // counter starts at 0
 Session.setDefault('level', walkingService.getCurrent());
-/*
+
 if(Meteor.isCordova){
 
   var myService;
@@ -59,13 +59,13 @@ if(Meteor.isCordova){
   }
 
   document.addEventListener('deviceready', function() {
-      var serviceName = 'com.red_folder.phonegap.plugin.backgroundservice.MyService';
+      var serviceName = 'com.androidServices.AndroidServices';
       var factory = cordova.require('com.red_folder.phonegap.plugin.backgroundservice.BackgroundService')
       myService = factory.create(serviceName);
 
       go();
       }, true);
- } */
+ }
 
 Template.hello.helpers({
   level: function () {
