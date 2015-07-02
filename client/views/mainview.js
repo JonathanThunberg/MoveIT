@@ -16,6 +16,8 @@ if (Meteor.isClient) {
   // counter starts at 0
   Session.setDefault('counter', 0);
 
+  Session.setDefault('sliderx', 0);
+
   // all settings enabled by default for now
   Session.setDefault('alarmUseSound', true);
   Session.setDefault('alarmUseVibration', true);
@@ -36,6 +38,26 @@ if (Meteor.isClient) {
       // increment the counter when button is clicked
       Session.set('counter', Session.get('counter') + 1);
       updateActivity();
+    }
+  });
+
+  Template.dragelement.events({
+    'click': function(){
+    },
+    'touchstart': function(){
+    },
+    'touchend': function(){
+
+    },
+    'touchmove': function(e){
+      e.stopPropagation();
+      e.preventDefault();
+      var currentY = e.originalEvent.touches ? e.originalEvent.touches[0].pageY : e.pageY;
+      if(currentY<($('.LeftContent').height()) && currentY>($('.LeftContent').height()/20)){
+        $('#slider').animate({
+          top: currentY-($('.LeftContent').height()/20)+"px"
+        }, 0);
+      }
     }
   });
 
