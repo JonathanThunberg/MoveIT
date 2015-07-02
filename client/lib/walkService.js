@@ -33,19 +33,22 @@
             Session.set('level', currentActivityLevel);
         }, timeInterval);
 
+    this.passToAlarm= function (vibration, sound, light) {
+      alarmingService.buildAlarms(vibration, sound, light);
+    };
+
     // Update level only if enough steps have been taken
     this.senseMovement= function () {
-        totalSteps++;
-        if(totalSteps > 20){
-          soundingService.playSound();
-        }
+
         stepsSinceLevelUpdate++;
         if(stepsSinceLevelUpdate >
                     levelPerStepsThreshold){
             currentActivityLevel++;
             stepsSinceLevelUpdate = 1;
+            alarmingService.levelIncreased(currentActivityLevel);
         }
         console.log("senseMovement");
+        Session.set('level', currentActivityLevel);
     };
 
     function AccSuccess(acceleration) {

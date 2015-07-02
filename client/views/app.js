@@ -9,4 +9,9 @@ if (Meteor.isClient) {
   );
   Router.route('/statsView')
   Router.route('/settingsView');
+
+
+
+
+
 }

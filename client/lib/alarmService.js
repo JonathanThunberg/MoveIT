@@ -1,4 +1,5 @@
 alarmService = function() {
+    var soundingService = new soundService();
     var that = this;
     var alarmdiff = 2;
     var alarmBools = new Mongo.Collection('alarmBools', {connection: null});
@@ -27,6 +28,7 @@ alarmService = function() {
     var vibrationOn = that.checkAlarmStatus("vibrationOn");
     var soundOn = that.checkAlarmStatus("soundOn");
     var lightOn = that.checkAlarmStatus("lightOn");
+
 
     this.buildAlarms = function(vibration, sound, light){
         alarms = {
@@ -71,21 +73,29 @@ alarmService = function() {
         alarms = receivedAlarms;
     };
     // TODO: rewrite
+
+
+
+    ;
+
+
     this.checkForAlarms = function(level){
-        if(vibrationOn && alarmTriggerLevel.vibration > alarms.vibration.length && level < alarms.vibration[alarmTriggerLevel.vibration]) {
+        if(Session.get('alarmUseVibration') && alarmTriggerLevel.vibration < alarms.vibration.length && level < alarms.vibration[alarmTriggerLevel.vibration]) {
+          //vibrationOn
           navigator.vibrate(1000);
           // vibrationAlarm triggered, check for next
           console.log('vibrate alarm nr; ' + alarmTriggerLevel.vibration);
           alarmTriggerLevel.vibration++;
         }
-        if(soundOn && alarmTriggerLevel.sound > alarms.sound.length && level < alarms.sound[alarmTriggerLevel.sound]) {
-
+        if(Session.get('alarmUseSound') && alarmTriggerLevel.sound < alarms.sound.length && level < alarms.sound[alarmTriggerLevel.sound]) {
+          //soundOn
           // soundAlarm triggered, check for next
           console.log('sound alarm nr; ' + alarmTriggerLevel.sound);
           alarmTriggerLevel.sound++;
+          soundingService.playSound();
         }
-        if(lightOn && alarmTriggerLevel.light > alarms.light.length && level < alarms.light[alarmTriggerLevel.light]) {
-
+        if(Session.get('alarmUseLight') && alarmTriggerLevel.light < alarms.light.length && level < alarms.light[alarmTriggerLevel.light]) {
+          //lightOn
           // soundAlarm triggered, check for next
           console.log('light alarm nr; ' + alarmTriggerLevel.light);
           alarmTriggerLevel.light++;
