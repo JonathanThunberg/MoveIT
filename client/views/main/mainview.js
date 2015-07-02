@@ -1,18 +1,11 @@
-function barHeight() {
-  return Math.ceil($('.LeftContent').height() * Session.get('counter') / 100);
-}
 
-function updateActivity() {
-  var height = barHeight();
-  $('.ActivityBar').animate({
-    height: ($('.LeftContent').height() - height)+"px"
-  }, 100);
-  $('.ActivityBarFill').animate({
-    height: height + "px"
-  }, 100);
-}
 
 if (Meteor.isClient) {
+  // Set up on-load function:
+  Router.onAfterAction(function () {
+
+  }, {only: ['main']});
+
   // counter starts at 0
   Session.setDefault('counter', 0);
 
@@ -22,10 +15,6 @@ if (Meteor.isClient) {
   Session.setDefault('alarmUseSound', true);
   Session.setDefault('alarmUseVibration', true);
   Session.setDefault('alarmUseLight', true);
-
-  Meteor.startup(function () {
-    updateActivity();
-  });
 
   Template.stats.helpers({
     counter: function () {
@@ -37,9 +26,14 @@ if (Meteor.isClient) {
     'click': function () {
       // increment the counter when button is clicked
       Session.set('counter', Session.get('counter') + 1);
-      updateActivity();
     }
   });
+
+  Template.dragelement.rendered = function(){
+    $('#slider').animate({
+      top: "+="+100+"px"
+    }, 0);
+  }
 
   Template.dragelement.events({
     'click': function(){
@@ -53,30 +47,25 @@ if (Meteor.isClient) {
       e.stopPropagation();
       e.preventDefault();
       var currentY = e.originalEvent.touches ? e.originalEvent.touches[0].pageY : e.pageY;
-      if(currentY<($('.LeftContent').height()) && currentY>($('.LeftContent').height()/20)){
-        $('#slider').animate({
-          top: currentY-($('.LeftContent').height()/20)+"px"
+      var act =$('.BarContainer');
+      var actpos = act.position();
+      var biggerValue = (act.height()+(actpos.top));
+      var slider = $('#slider');
+      if(currentY<(act.height()+(actpos.top)-(slider.height()/2)) && currentY>(actpos.top)-(slider.height()/2)){
+        slider.animate({
+          top: currentY+"px"
         }, 0);
       }
     }
   });
-
-  Template.body.helpers({
-    // Data context for alarm settings buttons:
-    alarmSettings: [
-      { type: 'Sound',
-        icon_enabled: 'volume_up',
-        icon_disabled: 'volume_off' },
-
-      { type: 'Vibration',
-        icon_enabled: 'alarm_on',
-        icon_disabled: 'alarm_off' },
-
-      { type: 'Light',
-        icon_enabled: 'phonelink_ring',
-        icon_disabled: 'phonelink_erase' }
-    ]
-  });
+  //---------------------------
+  // Activity Bar
+  //---------------------------
+  Template.activityBar.helpers({
+    fillHeight: function () {
+      return 100 - Session.get('counter');
+    }
+  })
 
   //---------------------------
   // Quick settings buttons
@@ -102,5 +91,22 @@ if (Meteor.isClient) {
         return this.icon_disabled;
       }
     }
+  });
+
+  Template.alarmSettings.helpers({
+    // Data context for alarm settings buttons:
+    alarmSettingsInfo: [
+      { type: 'Sound',
+        icon_enabled: 'volume_up',
+        icon_disabled: 'volume_off' },
+
+      { type: 'Vibration',
+        icon_enabled: 'alarm_on',
+        icon_disabled: 'alarm_off' },
+
+      { type: 'Light',
+        icon_enabled: 'phonelink_ring',
+        icon_disabled: 'phonelink_erase' }
+    ]
   });
 }

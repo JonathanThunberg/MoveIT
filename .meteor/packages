@@ -9,3 +9,5 @@ autopublish
 insecure
 fourseven:scss
 yang2007chun:materialize-scss
+chart:chart
+iron:router
