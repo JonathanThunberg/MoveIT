@@ -1,6 +1,7 @@
 var walkingService = new walkService();
 var soundingService = new soundService();
 var alarmingService = new alarmService();
+var testBackgrounding = new testBackground();
 
 // counter starts at 0
 Session.setDefault('level', walkingService.getCurrent());
