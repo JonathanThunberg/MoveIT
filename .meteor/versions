@@ -6,7 +6,6 @@ blaze@2.1.2
 blaze-tools@1.0.3
 boilerplate-generator@1.0.3
 callback-hook@1.0.3
-chart:chart@1.0.1-beta.4
 check@1.0.5
 ddp@1.1.0
 deps@1.0.7
@@ -34,6 +33,7 @@ livedata@1.0.13
 logging@1.0.7
 meteor@1.1.6
 meteor-platform@1.2.2
+mfpierre:chartist-js@1.5.0
 minifiers@1.1.5
 minimongo@1.0.8
 mobile-status-bar@1.0.3

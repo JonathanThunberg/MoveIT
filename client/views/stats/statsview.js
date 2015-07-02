@@ -1,50 +1,45 @@
-var activityChart;
-var activityBaseData = {
-  labels: [],
-  datasets: [
-    {
-      fillColor: "#B3E5FC",
-      strokeColor: "#0288D1",
-      data: []
-    }
+
+var data = {
+  labels: [''],
+  series: [
+    [0]
   ]
 };
-var activityOptions = {
-  responsive: true,
-  showScale: false,
-  showTooltips: false,
-  skipLabels: true,
-  pointDot: false,
-  animationSteps: 1
-}
 
-updateChart = function(chart, pointsName, numPoints) {
-  var points = Session.get(pointsName).slice();
-  for(var n = chart.datasets[0].points.length; n > 0; n--) {
-    chart.removeData();
-  }
-  for(var n = 0; n < numPoints; n++) {
-    chart.addData([points[n]], '');
-  }
-  chart.resize();
-  chart.update();
+var options = {
+  showPoint: false,
+  axisX: {
+    showGrid: false,
+    showLabel: false
+  },
+  axisY: {
+    showGrid: false,
+    showLabel: false,
+    offset: 0,
+  },
+  low: 0,
+  showArea: true,
+  chartPadding: {
+      top: 0,
+      right: 0,
+      bottom: 0,
+      left: 0
+    },
 };
 
-createChart = function(id) {
-  var context = document.getElementById(id).getContext('2d');
-  context.canvas.width = $(window).width();
-  console.log(context.canvas.width);
-  context.canvas.height = $(window).height() / 3;
-  //if (!activityChart) {
-    activityChart = new Chart(context).Line(activityBaseData, activityOptions);
-  //}
-}
-
+updateChart = function(id, pointsName, numPoints) {
+  var points = Session.get(pointsName).slice(0, numPoints);
+  data.series[0] = points;
+  data.labels = Array.apply(null, new Array(numPoints)).map(function(){return ''})
+  options.width = $(window).width();
+  options.height = $(window).height() / 3;
+  new Chartist.Line('#' + id, data, options);
+};
 
 emulateData = function() {
-  var data = [1.5];
+  var data = [50];
   for (var i = 1; i < 100; i++) {
-    data.push(data[i - 1] + Math.random() - 0.5);
+    data.push(50 + (Math.random() - 0.5)*20);
   }
   Session.set('activityPoints', data);
 }
@@ -56,8 +51,7 @@ if (Meteor.isClient) {
   }, {only: ['statsView']});
 
   Template.statsView.rendered = function() {
-    createChart('activityChart');
-    updateChart(activityChart, 'activityPoints', 8);
+    updateChart('activityChart', 'activityPoints', 8);
   }
 
   Template.statsView.helpers({
@@ -70,7 +64,7 @@ if (Meteor.isClient) {
 
     Template.activityChartTab.events({
       'click': function () {
-        updateChart(activityChart, 'activityPoints', this.points);
+        updateChart('activityChart', 'activityPoints', this.points);
       }
     });
   }
