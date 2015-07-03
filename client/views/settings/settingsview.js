@@ -16,7 +16,7 @@ if (Meteor.isClient) {
 
 	Template.weekdaysettingsitem.helpers({
 	    'selected': function() {
-	      if(Session.get('active' + this.day)) {
+	      if(Session.get('active' + this.name)) {
 	        return 'checked';
 	      } else {
 	        return '';
@@ -25,8 +25,8 @@ if (Meteor.isClient) {
 	});
 
     Template.weekdaysettingsitem.events({
-	    'check': function() {
-	      Session.set('active' + this.day, !Session.get('active' + this.day));
+	    'change': function() {
+	        Session.set('active' + this.name, !Session.get('active' + this.name));
 	    }
 	});
 
@@ -37,14 +37,17 @@ if (Meteor.isClient) {
     		]
     })
     Template.timeselectitem.helpers({ 
-    	'time' : function() { 
-    		return Session.get('time'+this.name);
-    	} ,
     	'formattedtime' : function() { 
     		return minutesTohhmm(Session.get('time'+this.name));
     	}
 
     });
+
+    Template.timeslider.helpers({
+    	'time' : function() { 
+    		return Session.get('time'+this.name);
+    	} 
+    })
 
     Template.timeslider.events({ 
     	'change': function() { 
@@ -98,6 +101,16 @@ if (Meteor.isClient) {
     	}
     });
 
+
+    
+
+    Template.alarmsettingscheck.events({
+	    'change': function() {
+
+	      Session.set('alarmUse' + this.name, !Session.get('alarmUse' + this.name));
+	    }
+	});
+    
 	Template.alarmsettingsslider.helpers({ 
     	sliderdisabled : function() { 
     		if(Session.get('alarmUse' + this.name)){ 
@@ -106,28 +119,12 @@ if (Meteor.isClient) {
     		return 'disabled';
     	},
     	intensity : function() { 
-    		console.log("dood");
-    		console.log(Session.get('alarmIntensity+'+this.name));
-    		return Session.get('alarmIntensity+'+this.name);
+    		return ""+Session.get('alarmIntensity'+this.name);
     	}
     });
-
-    
-
-    Template.alarmsettingscheck.events({
-	    'change': function() {
-
-	      Session.set('alarmUse' + this.name, !Session.get('alarmUse' + this.name));
-	      console.log(this.name+":   "+Session.get('alarmUse' + this.name));
-	    }
-	});
-    
-    Template.timeslider.events({ 
+    Template.alarmsettingsslider.events({ 
     	'change': function() { 
-    		console.log("kvack");
-    		console.log(this.name);
     		var v = $("#alarm_slider_"+this.name).val();
-    		console.log(this.name+":   "+v);	
     		Session.set('alarmIntensity'+this.name, v);
     	},
     	'input': function(){
@@ -141,11 +138,11 @@ if (Meteor.isClient) {
 
 	
 
-
   	function minutesTohhmm(minutes){
   		if(minutes===undefined) {return "0:00"};
   		var h = Math.floor(minutes/60);
   		var m = minutes%60;
+  		var b;
   		return (h<10?"0":"")+h+":"+
   			   (m<10?"0":"")+m;
   	}
