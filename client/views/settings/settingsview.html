@@ -11,22 +11,21 @@
 </template>
 
 
-<template name="weekdaysettingsitem">
-	<input type="checkbox" id="settings_day_{{name}}" {{selected}} />
-	<label for="settings_day_{{name}}">{{name}}</label>
-</template>
-<template name="weekdaysettingsrow">
-	<li class="collection-item">
-		{{> weekdaysettingsitem}}
-	</li>
-</template>
 <template name="weekdaysettings">
 	<ul class="collection with-header">
-	    <li class="collection-header"><h6>Weekdays</h6></li>
+	    <li class="collection-header"><h6>Active during</h6></li>
 		{{#each day}}
-			{{> weekdaysettingsrow}}
+			{{> weekdayitem}}
 		{{/each}}
 	</ul>
+</template>
+<template name="weekdayitem">
+	<li class="collection-item">
+		{{#with reference}}
+			{{> checkboxinput}}
+		{{/with}}
+	</li>
+
 </template>
 
 <template name="timeselectsettings">
@@ -67,34 +66,18 @@
 	<li class="collection-item">
 		<div class="row" style="margin-bottom:0px">
 			<div class="col s6 m4 l3">
-				{{>alarmsettingscheck}} 
+				{{#with checkboxReference}}
+					{{> checkboxinput}}
+				{{/with}}
 			</div>
 			<div class="col s6 m8 l9 " >
-				{{>alarmsettingsslider}}
+				{{#with sliderReference}}
+					{{> sliderinput}}
+				{{/with}}
 			</div>
 		</div>
 	</li>
 </template>
 
 
-<template name="alarmsettingscheck">
-	<input type="checkbox" id="settings_alarm_{{name}}" checked="{{alarmselected}}" />
-	<label for="settings_alarm_{{name}}"><i class="material-icons">{{icon}}</i></label>
-</template>
 
-<template name="alarmsettingsslider">
-	{{#with reference}}
-		{{> sliderinput}}
-	{{/with}}
-</template>
-
-<template name="sliderinput">
-	<p class="range-field" style="margin-bottom:0px;margin-top:0px">
-      <input type="range" id="input_slider_{{title}}" min="{{min}}" max="{{max}}" value="{{level}}" style="padding-top: 0px;padding-bottom:-30px; margin-bottom:-30px" {{sliderhidden}}/>
-    </p>
-</template>
-
-<template name="sliderinputtitled">
-	{{>sliderinput}}
-	<label for="input_slider_{{title}}">{{titleformat}}</label>
-</template>

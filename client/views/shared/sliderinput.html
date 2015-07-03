@@ -1,0 +1,10 @@
+<template name="sliderinput">
+	<p class="range-field" style="margin-bottom:0px;margin-top:0px">
+      <input type="range" id="input_slider_{{title}}" min="{{min}}" max="{{max}}" value="{{level}}" style="padding-top: 0px;padding-bottom:-30px; margin-bottom:-30px" {{sliderhidden}}/>
+    </p>
+</template>
+
+<template name="sliderinputtitled">
+	{{>sliderinput}}
+	<label for="input_slider_{{title}}">{{titleformat}}</label>
+</template>
