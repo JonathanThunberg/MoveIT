@@ -37,32 +37,23 @@ if (Meteor.isClient) {
     		]
     })
     Template.timeselectitem.helpers({ 
-    	'formattedtime' : function() { 
-    		return minutesTohhmm(Session.get('time'+this.name));
-    	}
-
-    });
-
-    Template.timeslider.helpers({
-    	'time' : function() { 
-    		return Session.get('time'+this.name);
-    	} 
-    })
-
-    Template.timeslider.events({ 
-    	'change': function() { 
-    		var v = $("#time_slider_"+this.name).val();
-    		v = v - (v%5) + ((v%5>2.5)? 5 : 0);
-    		Session.set('time'+this.name, v);
-    	},
-    	'input': function(){
-    	    var v = $("#time_slider_"+this.name).val();
-    		v = v - (v%5) + ((v%5>2.5)? 5 : 0);
-    		if(v){ 
-    			Session.set('time'+this.name,v);
+    	'reference' : function() { 
+    		return  {
+	    		title : this.name,
+	    		valueref : 'time'+this.name,
+	    		activeref : '',
+	    		min : 0,
+	    		max : 1435,
+	    		titleformat : function() {
+	    			return this.title + ": "+
+	    			 minutesTohhmm(Session.get(this.valueref));
+	    		}
     		}
     	}
+
+
     });
+
 
 	Template.alarmsettings.helpers({ 
     	event : [ 
@@ -112,34 +103,52 @@ if (Meteor.isClient) {
 
     Template.alarmsettingscheck.events({
 	    'change': function() {
-
 	      Session.set('alarmUse' + this.name, !Session.get('alarmUse' + this.name));
 	    }
 	});
     
 	Template.alarmsettingsslider.helpers({ 
-    	sliderdisabled : function() { 
-    		if(Session.get('alarmUse' + this.name)){ 
+    	reference : function() { 
+    		return  {
+	    		title : this.name,
+	    		valueref : 'alarmIntensity'+this.name,
+	    		activeref : 'alarmUse'+this.name,
+	    		min : 0,
+	    		max : 100
+    		}
+    	}
+    });
+
+
+    Template.sliderinput.helpers({
+		level : function() { 
+    		return ""+Session.get(this.valueref);
+    	},
+		sliderhidden : function() {
+    		var b = Session.get(this.activeref);
+    		if(b ===undefined || b){ 
     			return '';
     		}
-    		return 'disabled';
-    	},
-    	intensity : function() { 
-    		return ""+Session.get('alarmIntensity'+this.name);
-    	}
-    });
-    Template.alarmsettingsslider.events({ 
-    	'change': function() { 
-    		var v = $("#alarm_slider_"+this.name).val();
-    		Session.set('alarmIntensity'+this.name, v);
-    	},
-    	'input': function(){
-    	    var v = $("#alarm_slider_"+this.name).val();
-    		Session.set('alarmIntensity'+this.name, v);
+
+    		return 'hidden';
+
     	}
     });
 
+    Template.sliderinput.events({
+    	'input': function() { 
+    		var v = $("#input_slider_"+this.title).val();
+    		v = v - (v%5) + ((v%5>2.5)? 5 : 0);
+    		Session.set(this.valueref, v);
 
+    	}
+    });
+
+    Template.sliderinputtitled.helpers({
+		level : function() { 
+    		return ""+Session.get(this.valueref);
+    	}
+    });
 }
 
 	
