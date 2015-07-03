@@ -65,7 +65,8 @@ if (Meteor.isClient) {
 		checkboxReference : function(){
 			return {
 				reference : 'alarmUse' + this.name,
-				icon : this.icon
+				icon : this.icon, 
+				text : this.name
 			}
 		},
     	sliderReference : function() { 
