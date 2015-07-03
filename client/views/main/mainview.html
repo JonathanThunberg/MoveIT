@@ -2,7 +2,9 @@
   <div class="row">
     <div class="col s5 m2 l1" style="padding-left:0px; padding-right:0px;">
       <div class="LeftContent">
+
         {{> activityBar}}
+
       </div>
     </div>
 
@@ -43,9 +45,9 @@
 </template>
 
 <template name="activityBar">
-<div class="BarContainer">
-    <div class="BarBackground" style="height: {{fillHeight}}%"></div>
-    {{> dragelement}}
+<div class="BarContainer" style="position: relative;">
+    <div class="BarBackground" style="height: {{fillHeight}}%">{{> dragelements}}</div>
+
   </div>
 </template>
 
@@ -63,7 +65,13 @@
 </template>
 
 <template name="dragelement">
-     <img id="slider" style="position:absolute; z-index=10000000;" src="/linjesmile.png" alt="Lamp"  height="30"><br><br>
+     <img id="slider{{sType}}" style="position:absolute; z-index=10000000;" src="{{src}}"  height="30"><br><br>
+</template>
+
+<template name="dragelements">
+  {{#each eachSlider}}
+    {{> dragelement}}
+  {{/each}}
 </template>
 
 <template name="alarmSettings">

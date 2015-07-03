@@ -18,6 +18,10 @@ if (Meteor.isClient) {
   Session.setDefault('alarmUseVibration', true);
   Session.setDefault('alarmUseLight', true);
 
+
+  Session.setDefault('sliderxSound', 20);
+  Session.setDefault('sliderxVibration', 30);
+
   Template.stats.helpers({
     counter: function () {
       return Session.get('level');
@@ -32,8 +36,9 @@ if (Meteor.isClient) {
   });
 
   Template.dragelement.rendered = function(){
-    $('#slider').animate({
-      top: "+="+100+"px"
+    console.log("rendered");
+    $('#slider'+this.sType).animate({
+      top: "+="+this.pos+"px"
     }, 0);
   }
 
@@ -43,26 +48,43 @@ if (Meteor.isClient) {
     'touchstart': function(){
     },
     'touchend': function(){
-      console.log(110-((Session.get('sliderx')/($('.BarContainer').height()))*100));
-      var newAl = 110-((Session.get('sliderx')/($('.BarContainer').height()))*100);
-      walkingService.passToAlarm([20,15,10],[newAl,100,100],[100,100,100]);
+      var newAl = 100-((Session.get('sliderxSound')/($('.BarContainer').height()))*100);
+      var newAl2 = 100-((Session.get('sliderxVibration')/($('.BarContainer').height()))*100);
+      console.log([newAl2]+"   "+[newAl]+"   "+[100,100,100]);
+      walkingService.passToAlarm([newAl2],[newAl],[100]);
     },
     'touchmove': function(e){
       e.stopPropagation();
       e.preventDefault();
       var currentY = e.originalEvent.touches ? e.originalEvent.touches[0].pageY : e.pageY;
+
       var act =$('.BarContainer');
       var actpos = act.position();
       var biggerValue = (act.height()+(actpos.top));
-      var slider = $('#slider');
-      if(currentY<(act.height()+(actpos.top)-(slider.height()/2)) && currentY>(actpos.top)-(slider.height()/2)){
-        Session.set('sliderx', currentY);
+      var slider = $('#slider'+this.sType);
+      currentY -= slider.height()*2;
+      if(currentY<(act.height()+(actpos.top)-(slider.height()/2)-slider.height()*2) && currentY>(actpos.top)-(slider.height()/2)-slider.height()*2){
+        Session.set('sliderx'+this.sType, currentY);
         slider.animate({
           top: currentY+"px"
         }, 0);
       }
     }
   });
+  Template.dragelements.helpers({
+    // Data context for alarm settings buttons:
+    eachSlider: [
+      { sType: 'Sound',
+        src: "/linjesmile.png",
+        pos: 100
+        },
+
+      { sType: 'Vibration',
+        src: "/linjesmile2.png",
+        pos: 200  }
+    ]
+  });
+
   //---------------------------
   // Activity Bar
   //---------------------------
