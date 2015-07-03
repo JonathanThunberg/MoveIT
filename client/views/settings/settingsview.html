@@ -54,7 +54,7 @@
 
 <template name="alarmsettings">
 	<ul class="collection with-header">
-		<li class="collection-header"><h6>Irritation settings</h6></li>
+		<li class="collection-header"><h6>Reminder intensity</h6></li>
 		{{#each event}}
 			{{> alarmsettingsrow}}
 		{{/each}}
@@ -63,11 +63,11 @@
 
 <template name="alarmsettingsrow">
 	<li class="collection-item">
-		<div class="row">
+		<div class="row" style="margin-bottom:0px">
 			<div class="col s6 m4 l3">
 				{{>alarmsettingscheck}} 
 			</div>
-			<div class="col s6 m8 l9 ">
+			<div class="col s6 m8 l9 " {{sliderhidden}}>
 				{{>alarmsettingsslider}}
 			</div>
 		</div>
@@ -81,7 +81,7 @@
 </template>
 
 <template name="alarmsettingsslider">
-	<p class="range-field disabled">
-      <input type="range" id="alarm_slider_{{name}}" min="0" max="100" value="{{intensity}}" style="margin-top:-10%;margin-bottom:0px" {{sliderdisabled}}/>
+	<p class="range-field disabled" style="margin-bottom:0px;margin-top:0px">
+      <input type="range" id="alarm_slider_{{name}}" min="0" max="100" value="{{intensity}}" style="padding-top: 0px;padding-bottom:-30px; margin-bottom:-30px" {{sliderdisabled}}/>
     </p>
 </template>

@@ -86,7 +86,13 @@ if (Meteor.isClient) {
     		return Session.get('alarmUse' + this.name);
     	},
 
+    	sliderhidden : function() {
+    		if(Session.get('alarmUse' + this.name)){ 
+    			return '';
+    		}
+    		return 'hidden';
 
+    	},
     	sliderdisabled : function() { 
     		if(Session.get('alarmUse' + this.name)){ 
     			return '';
@@ -142,7 +148,6 @@ if (Meteor.isClient) {
   		if(minutes===undefined) {return "0:00"};
   		var h = Math.floor(minutes/60);
   		var m = minutes%60;
-  		var b;
   		return (h<10?"0":"")+h+":"+
   			   (m<10?"0":"")+m;
   	}
