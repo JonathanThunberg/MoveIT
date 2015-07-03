@@ -1,13 +1,17 @@
 
 
 if (Meteor.isClient) {
+
+
+  var walkingService = new walkService();
+
   // Set up on-load function:
   Router.onAfterAction(function () {
-    
+
   }, {only: ['main']});
 
-  // counter starts at 0
-  Session.setDefault('counter', 0);
+
+  Session.setDefault('sliderx', 0);
 
   // all settings enabled by default for now
   Session.setDefault('alarmUseSound', true);
@@ -16,23 +20,55 @@ if (Meteor.isClient) {
 
   Template.stats.helpers({
     counter: function () {
-      return Session.get('counter');
+      return Session.get('level');
     }
   });
 
   Template.step.events({
     'click': function () {
-      // increment the counter when button is clicked
-      Session.set('counter', Session.get('counter') + 1);
+      // increment the level when button is clicked
+      walkingService.senseMovement();
     }
   });
 
+  Template.dragelement.rendered = function(){
+    $('#slider').animate({
+      top: "+="+100+"px"
+    }, 0);
+  }
+
+  Template.dragelement.events({
+    'click': function(){
+    },
+    'touchstart': function(){
+    },
+    'touchend': function(){
+      console.log(110-((Session.get('sliderx')/($('.BarContainer').height()))*100));
+      var newAl = 110-((Session.get('sliderx')/($('.BarContainer').height()))*100);
+      walkingService.passToAlarm([20,15,10],[newAl,100,100],[100,100,100]);
+    },
+    'touchmove': function(e){
+      e.stopPropagation();
+      e.preventDefault();
+      var currentY = e.originalEvent.touches ? e.originalEvent.touches[0].pageY : e.pageY;
+      var act =$('.BarContainer');
+      var actpos = act.position();
+      var biggerValue = (act.height()+(actpos.top));
+      var slider = $('#slider');
+      if(currentY<(act.height()+(actpos.top)-(slider.height()/2)) && currentY>(actpos.top)-(slider.height()/2)){
+        Session.set('sliderx', currentY);
+        slider.animate({
+          top: currentY+"px"
+        }, 0);
+      }
+    }
+  });
   //---------------------------
   // Activity Bar
   //---------------------------
   Template.activityBar.helpers({
     fillHeight: function () {
-      return 100 - Session.get('counter');
+      return 100 - Session.get('level');
     }
   })
 

@@ -1,5 +1,4 @@
-
-<Template name="mainView">
+<template name="mainView">
   <div class="row">
     <div class="col s5 m2 l1" style="padding-left:0px; padding-right:0px;">
       <div class="LeftContent">
@@ -44,8 +43,9 @@
 </template>
 
 <template name="activityBar">
-  <div class="BarContainer">
+<div class="BarContainer">
     <div class="BarBackground" style="height: {{fillHeight}}%"></div>
+    {{> dragelement}}
   </div>
 </template>
 
@@ -60,6 +60,10 @@
     {{type}}
     {{> alarmSettingBtn}}
   </div>
+</template>
+
+<template name="dragelement">
+     <img id="slider" style="position:absolute; z-index=10000000;" src="/linjesmile.png" alt="Lamp"  height="30"><br><br>
 </template>
 
 <template name="alarmSettings">
