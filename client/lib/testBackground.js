@@ -8,6 +8,13 @@ testBackground = function(){
   }, true);
 
   function go() {
+      var config={
+                "soundAlarmLv" : 80,
+                "vibrateAlarmLv" : "60"
+      }
+      myService.setConfiguration(	config,
+											function(r){handleSuccess(r)},
+											function(e){handleError(e)});
      myService.getStatus(function(r){startService(r)}, function(e){handleError(e)});
   };
 
@@ -23,12 +30,22 @@ testBackground = function(){
      if (data.TimerEnabled) {
         allDone();
      } else {
-        myService.enableTimer(60000, function(r){allDone(r)}, function(e){handleError(e)});
+        myService.enableTimer(60000,
+          function(r){
+            allDone(r)
+            }, function(e){handleError(e)});
      }
   }
 
   function allDone() {
+     console.log("allDone");
      alert("Service now running");
+  }
+  function handleSuccess() {
+     alert("handleSuccess");
+  }
+  function handleError() {
+     alert("handleError");
   }
 
 
